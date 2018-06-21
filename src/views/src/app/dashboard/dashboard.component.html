@@ -1,0 +1,140 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+    Credit Friends
+
+    <span class="fill-space"></span>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon aria-label="Opciones">more_vert</mat-icon>
+    </button>
+
+</mat-toolbar>
+
+<!-- menu -->
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onLogout()">
+        <mat-icon>exit_to_app</mat-icon>
+        Cerrar sesión
+    </button>
+</mat-menu>
+<!-- end menu-->
+
+<div class="widgets-wrapper">
+
+    <mat-card>
+        <mat-card-header>
+            <mat-icon mat-card-avatar>account_circle</mat-icon>
+            <mat-card-title><p class="mat-title">Perfil</p></mat-card-title>
+            <mat-card-subtitle>{{userData?.nombre || 'cargando datos...'}}</mat-card-subtitle>
+            <mat-card-subtitle>Solicitudes pendientes</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+
+            <mat-list>
+                <mat-list-item *ngFor="let solicitud of solicitudesPendientes" style="height: unset;">
+                    
+                        <p mat-line style="font-size: 14px;"><b style="font-weight: 500;">Monto:</b> ${{solicitud.monto}}</p>
+                        <p mat-line><b style="font-weight: 500;">Total:</b> ${{solicitud.total}}</p>
+                        <p mat-line><b style="font-weight: 500;">Financiamiento:</b> {{getPlazo(solicitud.plazo)}}</p>
+                        <p mat-line><b style="font-weight: 500;">Fecha: </b>{{solicitud.fecha}}</p>
+                        <p mat-line>
+                            <b style="font-weight: 500;">Votaciones:</b>
+                            <span class="my-badge positive">{{solicitud.favor}}</span>
+                            <span class="my-badge negative">{{solicitud.contra}}</span>
+                        </p>
+                        <p mat-line>
+                            <b style="font-weight: 500;">Vigencia:</b> 
+                            <span appTimer [solicitud]="solicitud" (timeUp)="timeUp($event)" style="margin-left: 10px;">Cargando...</span>
+                        </p>
+                        
+                        <mat-divider></mat-divider>
+                </mat-list-item>
+
+                <p class="mat-title" *ngIf="solicitudesPendientes?.length == 0" style="text-align: center;">No hay registros.</p>
+                <mat-spinner style="margin: auto;" *ngIf="!solicitudesPendientes"></mat-spinner>
+
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="historial-widget">
+        <mat-card-header>
+            <mat-icon mat-card-avatar>history</mat-icon>
+            <mat-card-title><p class="mat-title">Historial</p></mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <mat-list>
+                <mat-list-item *ngFor="let solicitud of historial" style="height: unset;">
+                    
+                    <p mat-line style="font-size: 14px;"><b style="font-weight: 500;">Monto:</b> ${{solicitud.monto}}</p>
+                    <p mat-line><b style="font-weight: 500;">Total:</b> ${{solicitud.total}}</p>
+                    <p mat-line><b style="font-weight: 500;">Financiamiento:</b> {{getPlazo(solicitud.plazo)}}</p>
+                    <p mat-line><b style="font-weight: 500;">Fecha: </b>{{solicitud.fecha}}</p>
+                    <p mat-line><b style="font-weight: 500;">Status: </b>
+                        <span [ngClass]="{'re' : solicitud.status == 'R', 'ap' : solicitud.status == 'A'}">{{solicitud.status == 'R' ? "Rechazada" : "Aprobada"}}</span>
+                    </p>
+                    <p mat-line>
+                        <b style="font-weight: 500;">Votaciones:</b>
+                        <span class="my-badge positive">{{solicitud.favor}}</span>
+                        <span class="my-badge negative">{{solicitud.contra}}</span>
+                    </p>
+
+                    <mat-divider></mat-divider>
+                </mat-list-item>
+
+                <p class="mat-title" *ngIf="historial?.length == 0" style="text-align: center;">No hay registros.</p>
+                <mat-spinner style="margin: auto;" *ngIf="!historial"></mat-spinner>
+
+            </mat-list>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-button color="accent" (click)="onNuevaSolicitud()">NUEVA SOLICITUD</button>
+        </mat-card-actions>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-icon mat-card-avatar>bookmarks</mat-icon>
+            <mat-card-title><p class="mat-title">Solicitudes</p></mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+            <mat-list>
+                <mat-list-item *ngFor="let votar of aVotar">
+                    
+                    <p mat-line style="font-size: 14px; cursor: pointer;" (click)="onShowPerfil(votar)">
+                        <b style="font-weight: 500;">Solicitante:</b> {{votar.nombre}}
+                    </p>
+                    <p mat-line><b style="font-weight: 500;">Monto:</b> ${{votar.monto}}</p>
+                    <p mat-line><b style="font-weight: 500;">Total:</b> ${{votar.total}}</p>
+                    <p mat-line><b style="font-weight: 500;">Financiamiento:</b> {{getPlazo(votar.plazo)}}</p>
+                    <p mat-line><b style="font-weight: 500;">Fecha: </b>{{votar.fecha}}</p>
+                    <p mat-line>
+                        <b style="font-weight: 500;">Vigencia:</b> 
+                        <span appTimer [solicitud]="votar" style="margin-left: 10px;">Cargando...</span>
+                    </p>
+                    <p mat-line>
+                        <b style="font-weight: 500;">Votaciones:</b>
+                        <span class="my-badge positive">{{votar.favor}}</span>
+                        <span class="my-badge negative">{{votar.contra}}</span>
+                    </p>
+                    
+                    <p mat-line>
+                        <button mat-button (click)="onVotar('r', votar)">RECHAZAR</button>
+                        <button mat-button (click)="onVotar('a', votar)">APROBAR</button>
+                    </p>
+
+                    <mat-divider></mat-divider>
+                </mat-list-item>
+
+                <p class="mat-title" *ngIf="aVotar?.length == 0" style="text-align: center;">No hay registros.</p>
+                <mat-spinner style="margin: auto;" *ngIf="!aVotar"></mat-spinner>
+
+            </mat-list>
+        </mat-card-content>
+    </mat-card>
+
+
+</div>

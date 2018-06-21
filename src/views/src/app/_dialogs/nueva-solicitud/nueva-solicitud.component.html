@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Generar nueva solicitud.</h2>
+  
+  <form [formGroup]="solicitudForm" (ngSubmit)="onSolicitar()">
+
+    <mat-form-field appearance="legacy">
+      <mat-label>Monto</mat-label>
+      <input type="email" matInput placeholder="Cantidad en pesos a solicitar" formControlName="monto" maxlength="6" required>
+      <span matPrefix>$&nbsp;</span>
+      <span matSuffix>.00</span>
+      <mat-error *ngIf="solicitudForm.controls['monto'].invalid">{{getErrorMessage('monto')}}</mat-error>
+    </mat-form-field>
+
+    <mat-radio-group formControlName="plazo">
+      <mat-radio-button value="1">3 pagos: 5% de interés</mat-radio-button>
+      <mat-radio-button value="2">6 pagos: 7% de interés</mat-radio-button>
+      <mat-radio-button value="3">9 pagos: 12% de interés</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field appearance="outline" floatLabel="always" style="margin-top: 8px;">
+      <mat-label>Total a pagar</mat-label>
+      <input matInput placeholder="" formControlName="total" [value]="solicitudForm.controls['total'].value">
+      <span matPrefix>$&nbsp;</span>
+      <span matSuffix>.00</span>
+    </mat-form-field>
+
+    <div class="action-buttons">
+      <button type="button" mat-button mat-dialog-close tabindex="-1" color="primary">NO SOLICITAR</button>
+      <button type="submit" mat-button color="primary" [disabled]="submitButton">{{submitButton ? 'SOLICITANDO...' : 'SOLICITAR'}}</button>
+    </div>
+
+  </form>

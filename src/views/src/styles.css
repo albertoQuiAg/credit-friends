@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+/* scroll bar */
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.4);
+}
+
+input:-webkit-autofill {
+    box-shadow: 0 0 0 30px white inset;
+}
+/*end scroll bar*/
+
+.loading {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fafafa;
+    transition: opacity .6s ease-out;
+}

@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{data.nombre}}</h2>
+
+<mat-dialog-content>
+
+  <mat-list>
+    <mat-list-item *ngFor="let solicitud of solicitudes | async">
+        <p mat-line style="font-size: 14px;"><b style="font-weight: 500;">Monto:</b> ${{solicitud.monto}}</p>
+        <p mat-line><b style="font-weight: 500;">Total:</b> ${{solicitud.total}}</p>
+        <p mat-line><b style="font-weight: 500;">Financiamiento:</b> {{getPlazo(solicitud.plazo)}}</p>
+        <p mat-line><b style="font-weight: 500;">Fecha: </b>{{solicitud.fecha}}</p>
+        <p mat-line>
+          <b style="font-weight: 500;">Status: </b>
+          {{solicitud.status == 'R' ? "Rechazada" : solicitud.status == 'V' ? 'En votación' : "Aceptada"}}
+        </p>
+    </mat-list-item>
+  </mat-list>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close tabindex="-1" color="primary" class="my-action-buttons">CERRAR</button>
+  </mat-dialog-actions>

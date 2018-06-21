@@ -1,0 +1,20 @@
+{
+  "name": "concredito",
+  "version": "1.0.0",
+  "description": "ConCredito test fullstack",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js"
+  },
+  "author": "AlbertoQuiA",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "firebase-admin": "^5.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
+  }
+}

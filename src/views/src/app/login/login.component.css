@@ -1,0 +1,44 @@
+:host {
+    display: block;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.login-container {
+    height: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin: 20px 0 40px 0;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.signup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-wrapper > img {
+    background-color: #4caf50;
+    padding: 6px;
+    border-radius: 8px;
+}
