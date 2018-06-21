@@ -71,7 +71,7 @@ export class NuevaSolicitudComponent implements OnInit, OnDestroy {
 
       let currentdate = new Date(); 
       let datetime = currentdate.getDate() + "/" + (currentdate.getMonth()+1)  + "/" + currentdate.getFullYear() + " " + currentdate.getHours() + ":"  
-                      + currentdate.getMinutes();
+                      + currentdate.getMinutes() + ":" + currentdate.getSeconds();
 
       this.solicitudForm.controls['fecha'].patchValue(datetime);
 
